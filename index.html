@@ -221,6 +221,96 @@
   `).join('');
     }
 
+
+
+
+    function wireEvents() {
+      const cards = el('cards');
+      cards.addEventListener('click', async (e) => {
+        const favBtn = e.target.closest('.favorite-btn');
+        const copyBtn = e.target.closest('.copy-btn');
+        const callBtn = e.target.closest('.call-btn');
+
+        if (favBtn) {
+          const id = favBtn.dataset.id;
+          if (favorites.has(id)) {
+            favorites.delete(id);
+          } else {
+            favorites.add(id);
+          }
+          favBtn.innerHTML = heartButtonSVG(favorites.has(id));
+          updateCounters();
+        }
+
+        if (copyBtn) {
+          const id = copyBtn.dataset.id;
+          const service = services.find(s => s.id === id);
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(service.number);
+            } else {
+              const tmp = document.createElement('input');
+              tmp.value = service.number;
+              document.body.appendChild(tmp);
+              tmp.select();
+              document.execCommand('copy');
+              document.body.removeChild(tmp);
+            }
+            alert(`Copied ${service.number} for ${service.name}`);
+            copies += 1;
+            updateCounters();
+          } catch (err) {
+            alert('Copy failed. Please copy manually: ' + service.number);
+          }
+        }
+
+        if (callBtn) {
+          const id = callBtn.dataset.id;
+          const service = services.find(s => s.id === id);
+
+          if (coins < 20) {
+            alert('Not enough coins. Each call costs 20 coins.');
+            return;
+          }
+          coins -= 20;
+          updateCounters();
+
+          alert(`Calling ${service.name} ( ${service.number} )`);
+          const time = formatTime(new Date());
+          addHistory(service, time);
+        }
+      });
+
+      el('clearHistory').addEventListener('click', () => {
+        const list = el('historyList');
+        list.innerHTML = '<li class="text-xs text-gray-500">No calls yet. Make a call to see history.</li>';
+      });
+    }
+
+    function addHistory(service, time) {
+      const list = el('historyList');
+      if (list.firstElementChild && list.firstElementChild.textContent.includes('No calls yet')) {
+        list.innerHTML = '';
+      }
+      const li = document.createElement('li');
+      li.className = 'rounded-xl border border-gray-100 p-3 hover:bg-gray-50';
+      li.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-medium">${service.name}</div>
+            <div class="text-xs text-gray-500">${service.number}</div>
+          </div>
+          <div class="text-xs text-gray-400">${time}</div>
+        </div>
+      `;
+      list.prepend(li);
+    }
+
+    // Init
+    renderCards();
+    wireEvents();
+    updateCounters();
+
   </script>
 
 </body>
