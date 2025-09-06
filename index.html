@@ -174,7 +174,53 @@
         ? '<svg class="h-5 w-5 text-rose-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.35-9.6-8.1C.84 10.14 2.14 6.6 5.52 6.2c1.7-.2 3.3.6 4.48 1.92C11.66 6.8 13.3 6 15 6.2c3.36.4 4.68 3.94 3.12 6.7C19.2 16.65 12 21 12 21z"/></svg>'
         : '<svg class="h-5 w-5 text-gray-400 group-hover:text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12.1 20.3S4.9 16 2.5 12.2C.9 9.5 2.3 5.9 5.5 5.5c1.7-.2 3.4.6 4.6 2 1.2-1.4 2.9-2.2 4.6-2 3.2.4 4.6 3.9 3 6.7-2.4 3.9-9.6 8.1-9.6 8.1z"/></svg>';
     }
-    
+
+    function renderCards() {
+      const container = el('cards');
+      container.innerHTML = services.map(s => `
+    <article class="group relative flex flex-col rounded-2xl bg-white p-4 shadow-soft ring-1 ring-gray-200">
+
+      <!-- Top: Logo with favorite button overlay -->
+      <div class="flex items-start mb-2 relative">
+        <span class="inline-flex h-12 w-12 items-center justify-center rounded-md overflow-hidden
+          ${s.id === 'police' ? 'bg-brand-100' : 'bg-rose-100'}">
+          <img src="assets/${s.img}" alt="${s.name}" class="h-8 w-8 object-contain" />
+        </span>
+
+        <!-- Favorite button inside the logo area -->
+        <button class="favorite-btn absolute top-0 right-0 rounded-full p-1 transition bg-white/90 shadow-sm" 
+                data-id="${s.id}" aria-label="Toggle favorite" title="Favorite">
+          ${heartButtonSVG(favorites.has(s.id))}
+        </button>
+      </div>
+
+      <!-- Title + subtitle below logo -->
+      <div class="flex flex-col justify-start ml-0 mb-3">
+        <h3 class="text-sm font-semibold leading-5">${s.name}</h3>
+        <p class="text-xs text-gray-500">${s.subtitle}</p>
+      </div>
+
+      <!-- Bottom section: Number + tag + buttons -->
+      <div class="mt-auto flex flex-col gap-2">
+<div class="mb-3 flex flex-col items-start justify-between">
+  <div class="text-2xl font-extrabold tracking-tight">${s.number}</div>
+  <div class="mt-1 rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">${s.tag}</div>
+</div>
+
+
+        <div class="flex gap-2">
+          <button class="copy-btn inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500" data-id="${s.id}">
+            Copy
+          </button>
+          <button class="call-btn inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-600 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500" data-id="${s.id}">
+            Call
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+    }
+
   </script>
 
 </body>
