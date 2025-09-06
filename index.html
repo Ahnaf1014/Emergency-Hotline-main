@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emergency Service Directory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#effef6',
+              100: '#d7fde9',
+              200: '#b0f8d2',
+              300: '#79efb4',
+              400: '#42e094',
+              500: '#19c377',
+              600: '#0ea562',
+              700: '#0c8552',
+              800: '#0e6a44',
+              900: '#0f5539',
+            }
+          },
+          boxShadow: {
+            soft: '0 6px 20px rgba(16,24,40,.06)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    button {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body class="bg-brand-50 text-gray-800">
+  <!-- NAVBAR -->
+  <header class="w-full border-b border-white/40 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full shadow-soft overflow-hidden">
+            <img src="assets/logo.png" alt="Emergency Logo" class="h-full w-full object-cover" />
+          </span>
+
+
+          <div class="leading-5">
+            <div class="text-base font-extrabold tracking-tight text-brand-600">Emergency</div>
+            <div class="text-base font-extrabold tracking-tight text-brand-600">Service</div>
+          </div>
+
+        </a>
+        <div class="flex items-center gap-3 sm:gap-4">
+          <!-- Heart count -->
+          <div
+            class="flex items-center gap-1 rounded-full bg-brand-100 px-3 py-1 text-sm shadow-soft ring-1 ring-gray-200">
+            <svg class="h-4 w-4 text-rose-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 21s-7.2-4.35-9.6-8.1C.84 10.14 2.14 6.6 5.52 6.2c1.7-.2 3.3.6 4.48 1.92C11.66 6.8 13.3 6 15 6.2c3.36.4 4.68 3.94 3.12 6.7C19.2 16.65 12 21 12 21z" />
+            </svg>
+            <span id="heartCount" class="font-semibold">0</span>
+          </div>
+
+          <!-- Coin count -->
+          <div
+            class="flex items-center gap-1 rounded-full bg-brand-100 px-3 py-1 text-sm shadow-soft ring-1 ring-gray-200">
+            <img src="assets/coin.png" alt="Coins" class="h-4 w-4 object-contain" />
+            <span id="coinCount" class="font-semibold">100</span>
+          </div>
+
+          <!-- Copy count -->
+          <div
+            class="flex items-center gap-1 rounded-full bg-brand-600 px-3 py-1 text-sm shadow-soft ring-1 ring-gray-200 text-white">
+            <span id="copyCount" class="font-semibold">0</span>
+            <span class="text-xs">Copy</span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </header>
+
+</body>
+
+</html>
