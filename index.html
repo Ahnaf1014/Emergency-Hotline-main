@@ -108,6 +108,75 @@
     </div>
   </section>
 
+  <!-- MAIN -->
+  <main class="mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8">
+    <div class="grid gap-6 lg:grid-cols-4 lg:items-start">
+      <section class="lg:col-span-3">
+        <div id="cards" class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"></div>
+      </section>
+      <aside class="lg:col-span-1">
+        <div class="rounded-2xl bg-white p-4 shadow-soft ring-1 ring-gray-200">
+          <div class="mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-gray-700" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 7h8v2H8zM6 11h12v2H6zm2 4h8v2H8z" />
+              </svg>
+              <h2 class="text-sm font-semibold">Call History</h2>
+            </div>
+            <button id="clearHistory"
+              class="inline-flex items-center gap-1 rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">Clear</button>
+          </div>
+          <ul id="historyList" class="mt-2 max-h-[560px] space-y-2 overflow-auto pr-1">
+            <li class="text-xs text-gray-500">No calls yet. Make a call to see history.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const services = [
+      { id: 'emergency', img: 'emergency.png', icon: '🔔', name: 'National Emergency Number', subtitle: 'National Emergency', number: '999', tag: 'All' },
+      { id: 'police', img: 'police.png', icon: '👮', name: 'Police Helpline Number', subtitle: 'Police', number: '999', tag: 'Police' },
+      { id: 'fire-service', img: 'fire-service.png', icon: '🔥', name: 'Fire Service Number', subtitle: 'Fire Service', number: '999', tag: 'Fire' },
+      { id: 'ambulance', img: 'ambulance.png', icon: '🚑', name: 'Ambulance Service', subtitle: 'Ambulance', number: '1994-999999', tag: 'Health' },
+      { id: 'women', img: 'emergency.png', icon: '👩\u200d👧', name: 'Women & Child Helpline', subtitle: 'Women & Child Helpline', number: '109', tag: 'Help' },
+      { id: 'antiCorruption', img: 'emergency.png', icon: '🚫', name: 'Anti-Corruption Helpline', subtitle: 'Anti-Corruption', number: '106', tag: 'Govt.' },
+      { id: 'electricity', img: 'emergency.png', icon: '💡', name: 'Electricity Helpline', subtitle: 'Electricity Outage', number: '16216', tag: 'Electricity' },
+      { id: 'brac', img: 'brac.png', icon: '🏥', name: 'Brac Helpline', subtitle: 'Brac', number: '16445', tag: 'NGO' },
+      { id: 'Bangladesh-Railway', img: 'Bangladesh-Railway.png', icon: '🚆', name: 'Bangladesh Railway Helpline', subtitle: 'Bangladesh Railway', number: '163', tag: 'Travel' }
+    ];
+
+    const favorites = new Set();
+    let coins = 100;
+    let copies = 0;
+
+    const el = (id) => document.getElementById(id);
+    const pad = (n) => String(n).padStart(2, '0');
+    const formatTime = (d) => {
+      let h = d.getHours();
+      const m = d.getMinutes();
+      const s = d.getSeconds();
+      const am = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; if (h === 0) h = 12;
+      return `${pad(h)}:${pad(m)}:${pad(s)} ${am}`;
+    };
+
+    function updateCounters() {
+      el('heartCount').textContent = favorites.size;
+      el('coinCount').textContent = coins;
+      el('copyCount').textContent = copies;
+    }
+
+    // HEART SVG function - Kept exactly as original (no changes)
+    function heartButtonSVG(active) {
+      return active
+        ? '<svg class="h-5 w-5 text-rose-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.2-4.35-9.6-8.1C.84 10.14 2.14 6.6 5.52 6.2c1.7-.2 3.3.6 4.48 1.92C11.66 6.8 13.3 6 15 6.2c3.36.4 4.68 3.94 3.12 6.7C19.2 16.65 12 21 12 21z"/></svg>'
+        : '<svg class="h-5 w-5 text-gray-400 group-hover:text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12.1 20.3S4.9 16 2.5 12.2C.9 9.5 2.3 5.9 5.5 5.5c1.7-.2 3.4.6 4.6 2 1.2-1.4 2.9-2.2 4.6-2 3.2.4 4.6 3.9 3 6.7-2.4 3.9-9.6 8.1-9.6 8.1z"/></svg>';
+    }
+    
+  </script>
+
 </body>
 
 </html>
